@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>UwpDesignTimeData</id>
+    <version>1.0.0</version>
+    <authors>Matt Lacey</authors>
+    <owners>Matt Lacey</owners>
+    <language>XAML</language>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/mrlacey/UwpDesignTimeData</projectUrl>
+    <description>Enables inline design-time data in the XAML designer.</description>
+    <releaseNotes>Initial release. Please provide feedback.</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>UWP, XAML, designer</tags>
+    <repository url="https://github.com/mrlacey/UwpDesignTimeData" />
+    <dependencies>
+      <group targetFramework="uap" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\matt\Documents\GitHub\UwpDesignTimeData\UwpDesignTimeData\bin\Release\UwpDesignTimeData.dll" target="lib\uap\UwpDesignTimeData.dll" />
+  </files>
+</package>
