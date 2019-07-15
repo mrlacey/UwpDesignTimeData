@@ -1,8 +1,7 @@
 ﻿using System;
-using Windows.Foundation.Metadata;
+using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace UwpDesignTimeData
@@ -98,29 +97,33 @@ namespace UwpDesignTimeData
         public static readonly DependencyProperty FlowDirectionProperty =
             DependencyProperty.Register("FlowDirection", typeof(FlowDirection), typeof(DesignTime), new PropertyMetadata(null));
 
-
-
-        public static void SetText(UIElement element, string value)
+        private static void SetInDesigner(string propertyName, UIElement element, object value)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                switch (element)
+                var dprop = element.GetType().GetProperty(propertyName);
+                if (dprop != null)
                 {
-                    case TextBlock _:
-                        element.SetValue(TextBlock.TextProperty, value);
-                        break;
-                    case TextBox _:
-                        element.SetValue(TextBox.TextProperty, value);
-                        break;
-                    case ComboBox _:
-                        element.SetValue(ComboBox.TextProperty, value);
-                        break;
+                    element.SetValue((DependencyProperty)dprop.GetValue(element), value);
                 }
             }
-            else
+        }
+
+        private static void SetInDesigner(Type elementType, DependencyProperty dependencyProperty, UIElement element, object value)
+        {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                element.SetValue(DesignTime.TextProperty, value);
+                if (elementType.IsAssignableFrom(element.GetType()))
+                {
+                    element.SetValue(dependencyProperty, value);
+                }
             }
+        }
+
+        public static void SetText(UIElement element, string value)
+        {
+            element.SetValue(DesignTime.TextProperty, value);
+            SetInDesigner(nameof(TextProperty), element, value);
         }
 
         public static string GetText(UIElement element)
@@ -130,28 +133,8 @@ namespace UwpDesignTimeData
 
         public static void SetDescription(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                switch (element)
-                {
-                    case TextBox _:
-                        element.SetValue(TextBox.DescriptionProperty, value);
-                        break;
-                    case ComboBox _:
-                        element.SetValue(ComboBox.DescriptionProperty, value);
-                        break;
-                    case PasswordBox _:
-                        element.SetValue(PasswordBox.DescriptionProperty, value);
-                        break;
-                    case RichEditBox _:
-                        element.SetValue(RichEditBox.DescriptionProperty, value);
-                        break;
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.DescriptionProperty, value);
-            }
+            element.SetValue(DesignTime.DescriptionProperty, value);
+            SetInDesigner(nameof(DescriptionProperty), element, value);
         }
 
         public static object GetDescription(UIElement element)
@@ -161,62 +144,8 @@ namespace UwpDesignTimeData
 
         public static void SetHeader(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.NavigationView"))
-                {
-                    if (element is NavigationView)
-                    {
-                        element.SetValue(NavigationView.HeaderProperty, value);
-                    }
-                }
-                else
-                {
-                    switch (element)
-                    {
-                        case TextBox _:
-                            element.SetValue(TextBox.HeaderProperty, value);
-                            break;
-                        case ComboBox _:
-                            element.SetValue(ComboBox.HeaderProperty, value);
-                            break;
-                        case DatePicker _:
-                            element.SetValue(DatePicker.HeaderProperty, value);
-                            break;
-                        case TimePicker _:
-                            element.SetValue(TimePicker.HeaderProperty, value);
-                            break;
-                        case Hub _:
-                            element.SetValue(Hub.HeaderProperty, value);
-                            break;
-                        case HubSection _:
-                            element.SetValue(HubSection.HeaderProperty, value);
-                            break;
-                        case ListViewBase _:
-                            element.SetValue(ListViewBase.HeaderProperty, value);
-                            break;
-                        case PasswordBox _:
-                            element.SetValue(PasswordBox.HeaderProperty, value);
-                            break;
-                        case PivotItem _:
-                            element.SetValue(PivotItem.HeaderProperty, value);
-                            break;
-                        case RichEditBox _:
-                            element.SetValue(RichEditBox.HeaderProperty, value);
-                            break;
-                        case Slider _:
-                            element.SetValue(Slider.HeaderProperty, value);
-                            break;
-                        case ToggleSwitch _:
-                            element.SetValue(ToggleSwitch.HeaderProperty, value);
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.HeaderProperty, value);
-            }
+            element.SetValue(DesignTime.HeaderProperty, value);
+            SetInDesigner(nameof(HeaderProperty), element, value);
         }
 
         public static object GetHeader(UIElement element)
@@ -226,31 +155,8 @@ namespace UwpDesignTimeData
 
         public static void SetPlaceholderText(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                switch (element)
-                {
-                    case TextBox _:
-                        element.SetValue(TextBox.PlaceholderTextProperty, value);
-                        break;
-                    case ComboBox _:
-                        element.SetValue(ComboBox.PlaceholderTextProperty, value);
-                        break;
-                    case PasswordBox _:
-                        element.SetValue(PasswordBox.PlaceholderTextProperty, value);
-                        break;
-                    case RichEditBox _:
-                        element.SetValue(RichEditBox.PlaceholderTextProperty, value);
-                        break;
-                    case SearchBox _:
-                        element.SetValue(SearchBox.PlaceholderTextProperty, value);
-                        break;
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PlaceholderTextProperty, value);
-            }
+            element.SetValue(DesignTime.PlaceholderTextProperty, value);
+            SetInDesigner(nameof(PlaceholderTextProperty), element, value);
         }
 
         public static string GetPlaceholderText(UIElement element)
@@ -260,17 +166,11 @@ namespace UwpDesignTimeData
 
         public static void SetContent(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ContentControl)
-                {
-                    element.SetValue(ContentControl.ContentProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.ContentProperty, value);
-            }
+            element.SetValue(DesignTime.ContentProperty, value);
+
+            // ContentControl works a bit differently to other properties
+            // and so we need to set the design-time value on ContentControl directly.
+            SetInDesigner(typeof(ContentControl), ContentControl.ContentProperty, element, value);
         }
 
         public static object GetContent(UIElement element)
@@ -280,17 +180,8 @@ namespace UwpDesignTimeData
 
         public static void SetIsChecked(UIElement element, bool value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ToggleButton)
-                {
-                    element.SetValue(ToggleButton.IsCheckedProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.IsCheckedProperty, value);
-            }
+            element.SetValue(DesignTime.IsCheckedProperty, value);
+            SetInDesigner(nameof(IsCheckedProperty), element, value);
         }
 
         public static bool GetIsChecked(UIElement element)
@@ -300,17 +191,8 @@ namespace UwpDesignTimeData
 
         public static void SetFooter(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ListViewBase)
-                {
-                    element.SetValue(ListViewBase.FooterProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.FooterProperty, value);
-            }
+            element.SetValue(DesignTime.FooterProperty, value);
+            SetInDesigner(nameof(FooterProperty), element, value);
         }
 
         public static object GetFooter(UIElement element)
@@ -320,24 +202,8 @@ namespace UwpDesignTimeData
 
         public static void SetTitle(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is Pivot)
-                {
-                    element.SetValue(Pivot.TitleProperty, value);
-                }
-                else if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.MenuBarItem"))
-                {
-                    if (element is MenuBarItem)
-                    {
-                        element.SetValue(MenuBarItem.TitleProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.TitleProperty, value);
-            }
+            element.SetValue(DesignTime.TitleProperty, value);
+            SetInDesigner(nameof(TitleProperty), element, value);
         }
 
         public static object GetTitle(UIElement element)
@@ -347,20 +213,8 @@ namespace UwpDesignTimeData
 
         public static void SetPaneFooter(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.NavigationView"))
-                {
-                    if (element is NavigationView)
-                    {
-                        element.SetValue(NavigationView.PaneFooterProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PaneFooterProperty, value);
-            }
+            element.SetValue(DesignTime.PaneFooterProperty, value);
+            SetInDesigner(nameof(PaneFooterProperty), element, value);
         }
 
         public static object GetPaneFooter(UIElement element)
@@ -370,20 +224,8 @@ namespace UwpDesignTimeData
 
         public static void SetPaneHeader(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.NavigationView"))
-                {
-                    if (element is NavigationView)
-                    {
-                        element.SetValue(NavigationView.PaneHeaderProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PaneHeaderProperty, value);
-            }
+            element.SetValue(DesignTime.PaneHeaderProperty, value);
+            SetInDesigner(nameof(PaneHeaderProperty), element, value);
         }
 
         public static object GetPaneHeader(UIElement element)
@@ -393,20 +235,8 @@ namespace UwpDesignTimeData
 
         public static void SetPaneTitle(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.NavigationView"))
-                {
-                    if (element is NavigationView)
-                    {
-                        element.SetValue(NavigationView.PaneTitleProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PaneTitleProperty, value);
-            }
+            element.SetValue(DesignTime.PaneTitleProperty, value);
+            SetInDesigner(nameof(PaneTitleProperty), element, value);
         }
 
         public static object GetPaneTitle(UIElement element)
@@ -416,17 +246,8 @@ namespace UwpDesignTimeData
 
         public static void SetPassword(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is PasswordBox)
-                {
-                    element.SetValue(PasswordBox.PasswordProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PasswordProperty, value);
-            }
+            element.SetValue(DesignTime.PasswordProperty, value);
+            SetInDesigner(nameof(PasswordProperty), element, value);
         }
 
         public static string GetPassword(UIElement element)
@@ -436,17 +257,8 @@ namespace UwpDesignTimeData
 
         public static void SetPasswordChar(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is PasswordBox)
-                {
-                    element.SetValue(PasswordBox.PasswordCharProperty, value.Substring(0, 1));
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PasswordCharProperty, value);
-            }
+            element.SetValue(DesignTime.PasswordCharProperty, value);
+            SetInDesigner(nameof(PasswordCharProperty), element, value);
         }
 
         public static string GetPasswordChar(UIElement element)
@@ -456,24 +268,8 @@ namespace UwpDesignTimeData
 
         public static void SetValue(UIElement element, double value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is RangeBase)
-                {
-                    element.SetValue(RangeBase.ValueProperty, value);
-                }
-                else if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.RatingControl"))
-                {
-                    if (element is RatingControl)
-                    {
-                        element.SetValue(RatingControl.ValueProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.ValueProperty, value);
-            }
+            element.SetValue(DesignTime.ValueProperty, value);
+            SetInDesigner(nameof(ValueProperty), element, value);
         }
 
         public static double GetValue(UIElement element)
@@ -483,17 +279,8 @@ namespace UwpDesignTimeData
 
         public static void SetMinimum(UIElement element, double value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is RangeBase)
-                {
-                    element.SetValue(RangeBase.MinimumProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.MinimumProperty, value);
-            }
+            element.SetValue(DesignTime.MinimumProperty, value);
+            SetInDesigner(nameof(MinimumProperty), element, value);
         }
 
         public static double GetMinimum(UIElement element)
@@ -503,17 +290,8 @@ namespace UwpDesignTimeData
 
         public static void SetMaximum(UIElement element, double value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is RangeBase)
-                {
-                    element.SetValue(RangeBase.MaximumProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.MaximumProperty, value);
-            }
+            element.SetValue(DesignTime.MaximumProperty, value);
+            SetInDesigner(nameof(MaximumProperty), element, value);
         }
 
         public static double GetMaximum(UIElement element)
@@ -523,20 +301,8 @@ namespace UwpDesignTimeData
 
         public static void SetPlaceholderValue(UIElement element, double value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.RatingControl"))
-                {
-                    if (element is RatingControl)
-                    {
-                        element.SetValue(RatingControl.PlaceholderValueProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.PlaceholderValueProperty, value);
-            }
+            element.SetValue(DesignTime.PlaceholderValueProperty, value);
+            SetInDesigner(nameof(PlaceholderValueProperty), element, value);
         }
 
         public static double GetPlaceholderValue(UIElement element)
@@ -546,20 +312,8 @@ namespace UwpDesignTimeData
 
         public static void SetMaxRating(UIElement element, int value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.RatingControl"))
-                {
-                    if (element is RatingControl)
-                    {
-                        element.SetValue(RatingControl.MaxRatingProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.MaxRatingProperty, value);
-            }
+            element.SetValue(DesignTime.MaxRatingProperty, value);
+            SetInDesigner(nameof(MaxRatingProperty), element, value);
         }
 
         public static int GetMaxRating(UIElement element)
@@ -569,20 +323,8 @@ namespace UwpDesignTimeData
 
         public static void SetCaption(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.RatingControl"))
-                {
-                    if (element is RatingControl)
-                    {
-                        element.SetValue(RatingControl.CaptionProperty, value);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.CaptionProperty, value);
-            }
+            element.SetValue(DesignTime.CaptionProperty, value);
+            SetInDesigner(nameof(CaptionProperty), element, value);
         }
 
         public static string GetCaption(UIElement element)
@@ -592,17 +334,8 @@ namespace UwpDesignTimeData
 
         public static void SetQueryText(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is SearchBox)
-                {
-                    element.SetValue(SearchBox.QueryTextProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.QueryTextProperty, value);
-            }
+            element.SetValue(DesignTime.QueryTextProperty, value);
+            SetInDesigner(nameof(QueryTextProperty), element, value);
         }
 
         public static string GetQueryText(UIElement element)
@@ -612,17 +345,8 @@ namespace UwpDesignTimeData
 
         public static void SetIsOn(UIElement element, bool value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ToggleSwitch)
-                {
-                    element.SetValue(ToggleSwitch.IsOnProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.IsOnProperty, value);
-            }
+            element.SetValue(DesignTime.IsOnProperty, value);
+            SetInDesigner(nameof(IsOnProperty), element, value);
         }
 
         public static bool GetIsOn(UIElement element)
@@ -632,17 +356,8 @@ namespace UwpDesignTimeData
 
         public static void SetOnContent(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ToggleSwitch)
-                {
-                    element.SetValue(ToggleSwitch.OnContentProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.OnContentProperty, value);
-            }
+            element.SetValue(DesignTime.OnContentProperty, value);
+            SetInDesigner(nameof(OnContentProperty), element, value);
         }
 
         public static object GetOnContent(UIElement element)
@@ -652,17 +367,8 @@ namespace UwpDesignTimeData
 
         public static void SetOffContent(UIElement element, object value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is ToggleSwitch)
-                {
-                    element.SetValue(ToggleSwitch.OffContentProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.OffContentProperty, value);
-            }
+            element.SetValue(DesignTime.OffContentProperty, value);
+            SetInDesigner(nameof(OffContentProperty), element, value);
         }
 
         public static object GetOffContent(UIElement element)
@@ -672,23 +378,8 @@ namespace UwpDesignTimeData
 
         public static void SetIcon(UIElement element, IconElement value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Controls.NavigationViewItem"))
-                {
-                    if (element is NavigationViewItem navviewitem)
-                    {
-                        if (navviewitem.Icon == null)
-                        {
-                            element.SetValue(NavigationViewItem.IconProperty, value);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.IconProperty, value);
-            }
+            element.SetValue(DesignTime.IconProperty, value);
+            SetInDesigner(nameof(IconProperty), element, value);
         }
 
         public static IconElement GetIcon(UIElement element)
@@ -698,17 +389,8 @@ namespace UwpDesignTimeData
 
         public static void SetSymbol(UIElement element, Symbol value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is SymbolIcon)
-                {
-                    element.SetValue(SymbolIcon.SymbolProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.SymbolProperty, value);
-            }
+            element.SetValue(DesignTime.SymbolProperty, value);
+            SetInDesigner(nameof(SymbolProperty), element, value);
         }
 
         public static Symbol GetSymbol(UIElement element)
@@ -718,19 +400,11 @@ namespace UwpDesignTimeData
 
         public static void SetTime(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            element.SetValue(DesignTime.TimeProperty, value);
+
+            if (TimeSpan.TryParse(value, out TimeSpan parsed))
             {
-                if (element is TimePicker)
-                {
-                    if (TimeSpan.TryParse(value, out TimeSpan parsed))
-                    {
-                        element.SetValue(TimePicker.TimeProperty, parsed);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.TimeProperty, value);
+                SetInDesigner(nameof(TimeProperty), element, parsed);
             }
         }
 
@@ -741,19 +415,11 @@ namespace UwpDesignTimeData
 
         public static void SetDate(UIElement element, string value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            element.SetValue(DesignTime.DateProperty, value);
+
+            if (DateTimeOffset.TryParse(value, out DateTimeOffset parsed))
             {
-                if (element is DatePicker)
-                {
-                    if (DateTimeOffset.TryParse(value, out DateTimeOffset parsed))
-                    {
-                        element.SetValue(DatePicker.DateProperty, parsed);
-                    }
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.DateProperty, value);
+                SetInDesigner(nameof(DateProperty), element, parsed);
             }
         }
 
@@ -764,17 +430,8 @@ namespace UwpDesignTimeData
 
         public static void SetSource(UIElement element, ImageSource value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is Image)
-                {
-                    element.SetValue(Image.SourceProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.SourceProperty, value);
-            }
+            element.SetValue(DesignTime.SourceProperty, value);
+            SetInDesigner(nameof(SourceProperty), element, value);
         }
 
         public static ImageSource GetSource(UIElement element)
@@ -784,23 +441,13 @@ namespace UwpDesignTimeData
 
         public static void SetFlowDirection(UIElement element, FlowDirection value)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (element is FrameworkElement)
-                {
-                    element.SetValue(FrameworkElement.FlowDirectionProperty, value);
-                }
-            }
-            else
-            {
-                element.SetValue(DesignTime.SourceProperty, value);
-            }
+            element.SetValue(DesignTime.FlowDirectionProperty, value);
+            SetInDesigner(nameof(FlowDirectionProperty), element, value);
         }
 
         public static FlowDirection GetFlowDirection(UIElement element)
         {
             return (FlowDirection)element.GetValue(DesignTime.FlowDirectionProperty);
         }
-
     }
 }
