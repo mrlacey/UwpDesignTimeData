@@ -93,4 +93,4 @@ Before you start using this, you should probably know the following:
 
 - You may need to rebuild the app to force the designer to update and show the [changes to] design-time data.
 - If you specify a property and the design-time version, specify the design-time version second.
-- If you have any questions or suggestions for a new property to support at design-time, please raise an issue.
+- If you have any questions or suggestions for a new property to support at design-time, please [raise an issue](https://github.com/mrlacey/UwpDesignTimeData/issues/new).
