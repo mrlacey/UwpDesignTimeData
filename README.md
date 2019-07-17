@@ -11,23 +11,22 @@ If using localization or bindings in your XAML you can end up with a page that l
 
 ![Designer with no useful, visible data](./assets/design-time-before.png)
 
-This makes it hard to know what the UI will look like without running the app.
+This makes it hard to know what the UI will look like without running the app.  
+This library provides a way to add data that shows up in the designer without impacting the behavior of the app at run-time.
 
 ![Designer showing content at design-time](./assets/design-time-after.png)
 
-Xamarin.Forms already has this capability. Consider this a poly-fill until this functionality is provided by Visual Studio for all XAML dialects. Hopefully this will be soon. :crossed_fingers:
 
 Do this:
 
 1. `Install-Package UwpDesignTimeData`
 2. Then, do things like this in your XAML: `dt:DesignTime:Text="Only shown in designer."`
 
-You should see something like this:
+Then you can see behavior like this:
 
 ![Design time data in bindings shown in VS](./assets/design-time-binding.png)
 
-
-The hope is that when official support is added, you'll be able to update your code to use it by removing the reference and replacing `dt:DesignTime.` with `d:`.
+The `Text` property will show the valeu from the binding at run-time while showing the design-time data in the designer, so you can have a visual idea of how it will look.
 
 ## Support for the following properties
 
@@ -92,10 +91,16 @@ Even if you don't do this, the way the code is implemented means that it won't t
 
 The performance impact of including this library is tiny and should not be noticable. Please feel free to raise an issue if you have a way of reproducing a measurable impact at run-time.
 
+## Why doesn't Visual Studio do this already?
+
+Xamarin.Forms already [has this capability](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/xaml/xaml-previewer/design-time-data). Consider this a poly-fill until this functionality is provided by Visual Studio for all XAML dialects. Hopefully this will be soon. :crossed_fingers:
+
+The hope is that when official support is added, you'll be able to update your code to use it by removing the NuGet reference and replacing '`dt:DesignTime.`' with '`d:`'.
+
 ## Important to know
 
 Before you start using this, you should probably know the following:
 
 - You may need to rebuild the app to force the designer to update and show the [changes to] design-time data.
-- If you specify a property and the design-time version, specify the design-time version second.
+- If you specify a property and the design-time version, specify the design-time version second or it may not show in the designer.
 - If you have any questions or suggestions for a new property to support at design-time, please [raise an issue](https://github.com/mrlacey/UwpDesignTimeData/issues/new).
