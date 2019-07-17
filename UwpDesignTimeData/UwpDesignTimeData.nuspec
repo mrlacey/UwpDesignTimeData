@@ -9,7 +9,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/mrlacey/UwpDesignTimeData</projectUrl>
-    <description>Enables inline design-time data in the XAML designer.</description>
+    <description>Enables inline design-time data in the XAML designer for UWP apps.</description>
     <releaseNotes>Support any element.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>UWP, XAML, designer</tags>

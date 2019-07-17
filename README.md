@@ -2,6 +2,11 @@
 
 Allow UWP projects to use inline design-time data.
 
+[![NuGet](https://img.shields.io/nuget/v/UwpDesignTimeData.svg)](https://www.nuget.org/packages/UwpDesignTimeData/1.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Works with Visual Studio 2017](https://img.shields.io/static/v1.svg?label=VS&message=2017&color=5F2E96)
+![Works with Visual Studio 2019](https://img.shields.io/static/v1.svg?label=VS&message=2019&color=BB88F3)
+
 If using localization or bindings in your XAML you can end up with a page that looks empty in the designer.
 
 ![Designer with no useful, visible data](./assets/design-time-before.png)
