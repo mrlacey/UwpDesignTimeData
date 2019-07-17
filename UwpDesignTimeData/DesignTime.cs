@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DesignTime.cs" company="Matt Lacey Ltd.">
+// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// </copyright>
+
+using System;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -48,7 +52,6 @@ namespace UwpDesignTimeData
         public static readonly DependencyProperty PasswordCharProperty =
             DependencyProperty.Register("PasswordChar", typeof(string), typeof(DesignTime), new PropertyMetadata(null));
 
-
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(double), typeof(DesignTime), new PropertyMetadata(null));
 
@@ -96,29 +99,6 @@ namespace UwpDesignTimeData
 
         public static readonly DependencyProperty FlowDirectionProperty =
             DependencyProperty.Register("FlowDirection", typeof(FlowDirection), typeof(DesignTime), new PropertyMetadata(null));
-
-        private static void SetInDesigner(string propertyName, UIElement element, object value)
-        {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                var dprop = element.GetType().GetProperty(propertyName);
-                if (dprop != null)
-                {
-                    element.SetValue((DependencyProperty)dprop.GetValue(element), value);
-                }
-            }
-        }
-
-        private static void SetInDesigner(Type elementType, DependencyProperty dependencyProperty, UIElement element, object value)
-        {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                if (elementType.IsAssignableFrom(element.GetType()))
-                {
-                    element.SetValue(dependencyProperty, value);
-                }
-            }
-        }
 
         public static void SetText(UIElement element, string value)
         {
@@ -448,6 +428,29 @@ namespace UwpDesignTimeData
         public static FlowDirection GetFlowDirection(UIElement element)
         {
             return (FlowDirection)element.GetValue(DesignTime.FlowDirectionProperty);
+        }
+
+        private static void SetInDesigner(string propertyName, UIElement element, object value)
+        {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                var dprop = element.GetType().GetProperty(propertyName);
+                if (dprop != null)
+                {
+                    element.SetValue((DependencyProperty)dprop.GetValue(element), value);
+                }
+            }
+        }
+
+        private static void SetInDesigner(Type elementType, DependencyProperty dependencyProperty, UIElement element, object value)
+        {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                if (elementType.IsAssignableFrom(element.GetType()))
+                {
+                    element.SetValue(dependencyProperty, value);
+                }
+            }
         }
     }
 }
