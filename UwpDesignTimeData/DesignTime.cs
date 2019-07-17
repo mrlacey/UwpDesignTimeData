@@ -1,5 +1,5 @@
 ﻿// <copyright file="DesignTime.cs" company="Matt Lacey Ltd.">
-// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// Copyright (c) Matt Lacey Ltd.. All rights reserved.
 // </copyright>
 
 using System;

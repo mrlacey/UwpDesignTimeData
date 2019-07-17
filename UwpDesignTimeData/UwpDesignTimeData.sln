@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UwpDesignTimeData", "UwpDes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF8A07D1-D217-42FF-82F2-8531BC052663}"
 	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
 		UwpDesignTimeData.nuspec = UwpDesignTimeData.nuspec
 	EndProjectSection
 EndProject
