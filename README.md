@@ -11,11 +11,10 @@ If using localization or bindings in your XAML you can end up with a page that l
 
 ![Designer with no useful, visible data](./assets/design-time-before.png)
 
-This makes it hard to know what the UI will look like without running the app.  
+This makes it hard to know what the UI will look like without running the app.
 This library provides a way to add data that shows up in the designer without impacting the behavior of the app at run-time.
 
 ![Designer showing content at design-time](./assets/design-time-after.png)
-
 
 Do this:
 
