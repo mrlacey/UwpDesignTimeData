@@ -19,7 +19,7 @@ This library provides a way to add data that shows up in the designer without im
 Do this:
 
 1. `Install-Package UwpDesignTimeData`
-2. Then, do things like this in your XAML: `dt:DesignTime:Text="Only shown in designer."`
+2. Then, do things like this in your XAML: `dt:DesignTime.Text="Only shown in designer."`
 
 Then you can see behavior like this:
 
