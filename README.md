@@ -62,7 +62,7 @@ You can use this library with any of the following `DesignTime` properties.
 - Title
 - Value
 
-If the underlying element has the property the design-time content will be used in the designer. If it doens't have that property, the design-time value will be ignored.
+If the underlying element has the property the design-time content will be used in the designer. If it doesn't have that property, the design-time value will be ignored.
 
 ## Improving the design-time experience
 
