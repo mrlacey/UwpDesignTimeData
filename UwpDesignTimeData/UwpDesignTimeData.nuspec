@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>UwpDesignTimeData</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <authors>Matt Lacey</authors>
     <owners>Matt Lacey</owners>
     <language>XAML</language>
@@ -10,7 +10,7 @@
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/mrlacey/UwpDesignTimeData</projectUrl>
     <description>Enables inline design-time data in the XAML designer for UWP apps.</description>
-    <releaseNotes>Support any element.</releaseNotes>
+    <releaseNotes>Add support for Offset property.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>UWP, XAML, designer</tags>
     <repository url="https://github.com/mrlacey/UwpDesignTimeData" />
