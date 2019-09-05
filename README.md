@@ -25,7 +25,7 @@ Then you can see behavior like this:
 
 ![Design time data in bindings shown in VS](./assets/design-time-binding.png)
 
-The `Text` property will show the valeu from the binding at run-time while showing the design-time data in the designer, so you can have a visual idea of how it will look.
+The `Text` property will show the value from the binding at run-time while showing the design-time data in the designer, so you can have a visual idea of how it will look.
 
 ## Support for the following properties
 
