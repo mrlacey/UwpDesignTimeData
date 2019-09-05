@@ -45,6 +45,7 @@ You can use this library with any of the following `DesignTime` properties.
 - MaxRating
 - Minimum
 - OffContent
+- Offset
 - OnContent
 - PaneFooter
 - PaneHeader

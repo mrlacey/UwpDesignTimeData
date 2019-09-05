@@ -100,6 +100,9 @@ namespace UwpDesignTimeData
         public static readonly DependencyProperty FlowDirectionProperty =
             DependencyProperty.Register("FlowDirection", typeof(FlowDirection), typeof(DesignTime), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty OffsetProperty =
+            DependencyProperty.Register("Offset", typeof(double), typeof(DesignTime), new PropertyMetadata(null));
+
         public static void SetText(UIElement element, string value)
         {
             element.SetValue(DesignTime.TextProperty, value);
@@ -428,6 +431,20 @@ namespace UwpDesignTimeData
         public static FlowDirection GetFlowDirection(UIElement element)
         {
             return (FlowDirection)element.GetValue(DesignTime.FlowDirectionProperty);
+        }
+
+        public static void SetOffset(GradientStop element, double value)
+        {
+            element.SetValue(DesignTime.OffsetProperty, value);
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                element.Offset = value;
+            }
+        }
+
+        public static double GetOffset(GradientStop element)
+        {
+            return (double)element.GetValue(DesignTime.OffsetProperty);
         }
 
         private static void SetInDesigner(string propertyName, UIElement element, object value)
