@@ -1,5 +1,11 @@
 # UWP Design-Time Data
 
+**!IMPORTANT!**
+This tool should no longer be necessary.  
+The ablity to use design-time data within the Visual Studio XAML editor was [added in version 16.7](https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes-v16.7#xaml-tools-wpf-uwp--xamarinforms).
+
+---
+
 Allow UWP projects to use inline design-time data.
 
 [![NuGet](https://img.shields.io/nuget/v/UwpDesignTimeData.svg)](https://www.nuget.org/packages/UwpDesignTimeData/1.1.0)
